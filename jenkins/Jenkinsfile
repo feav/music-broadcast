@@ -17,10 +17,8 @@ pipeline {
                 script {
                     def dockerComposeCommand = "docker-compose --version"
 
-                    // Check if docker-compose is already installed
                     def dockerComposeInstalled = sh(script: dockerComposeCommand, returnStatus: true) == 0
 
-                    // If not installed, install Docker Compose
                     if (!dockerComposeInstalled) {
                         echo "Docker Compose is not installed. Installing..."
 
