@@ -75,13 +75,13 @@ pipeline {
                 sh 'sleep 5'
                 sh 'docker ps'
 
-                 def containerName = 'distribution_phpmyadmin_1' // Remplacez par le nom de votre conteneur
+                  containerName = 'distribution_phpmyadmin_1' // Remplacez par le nom de votre conteneur
                     
                 // Utilisez docker inspect pour obtenir les détails du conteneur au format JSON
-                def inspectResult = sh(script: "docker inspect ${containerName}", returnStdout: true).trim()
+                 inspectResult = sh(script: "docker inspect ${containerName}", returnStdout: true).trim()
 
                 // Analysez le JSON pour extraire l'adresse IP du conteneur
-                def containerIP = sh(script: "echo ${inspectResult} | jq -r '.[0].NetworkSettings.IPAddress'", returnStdout: true).trim()
+                 containerIP = sh(script: "echo ${inspectResult} | jq -r '.[0].NetworkSettings.IPAddress'", returnStdout: true).trim()
 
                 echo "IP Address of container ${containerName}:"
                 sh 'curl http://${containerIP}:8081'
