@@ -38,6 +38,7 @@ pipeline {
             agent any
             steps {
                 sh 'cd distribution'
+                sh 'pwd'
                 sh 'docker-compose up -d'
                 sh 'sleep 30000'
                 sh 'curl http://localhost:8081'
