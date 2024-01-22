@@ -24,7 +24,15 @@ pipeline {
                         // Ajoutez les commandes pour installer Docker ici
                         sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                         sh 'sh get-docker.sh'
-                        sh 'sudo usermod -aG docker ${USER}'  // Ajoutez l'utilisateur Jenkins au groupe docker
+                       // sh 'usermod -aG docker ${USER}'  // Ajoutez l'utilisateur Jenkins au groupe docker
+                            
+                        // Obtenez le nom de l'utilisateur connecté dynamiquement
+                        def currentUserName = sh(script: 'whoami', returnStdout: true).trim()
+                        
+                        // Ajoutez l'utilisateur Jenkins au groupe docker
+                        sh "sudo usermod -aG docker ${currentUserName}"
+
+                        
 
                         // Redémarrez Jenkins ou votre agent Jenkins après l'installation de Docker pour que les modifications prennent effet
                     } else {
