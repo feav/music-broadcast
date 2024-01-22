@@ -1,11 +1,10 @@
 pipeline {
-	environment {
-		IMAGE_NAME = "musicbroad",
-		IMAGE_TAG = "latest"
-	}
-	agent none
-	stages {
-		stage("Build image")
-			echo "Hello world"
-	}
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
 }
