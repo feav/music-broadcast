@@ -77,7 +77,7 @@ pipeline {
                 sh 'docker ps'
 
                 sh 'docker inspect distribution_phpmyadmin_1'
-                sh 'curl http://${containerIP}:8081'
+                sh 'curl http://localhost:8081'
             }
         }
     }
