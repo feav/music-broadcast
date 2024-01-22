@@ -12,6 +12,28 @@ pipeline {
                 sh 'ls distribution'
             }
         }
+        stage('Check and Install Docker') {
+            steps {
+                script {
+                    def dockerCommand = "docker --version"
+                    def dockerInstalled = sh(script: dockerCommand, returnStatus: true) == 0
+
+                    if (!dockerInstalled) {
+                        echo "Docker is not installed. Installing..."
+
+                        // Ajoutez les commandes pour installer Docker ici
+                        sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                        sh 'sh get-docker.sh'
+                        sh 'sudo usermod -aG docker ${USER}'  // Ajoutez l'utilisateur Jenkins au groupe docker
+
+                        // Redémarrez Jenkins ou votre agent Jenkins après l'installation de Docker pour que les modifications prennent effet
+                    } else {
+                        echo "Docker is already installed."
+                    }
+                }
+            }
+        }
+
          stage('Check and Install Docker Compose') {
             steps {
                 script {
