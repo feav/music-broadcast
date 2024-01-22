@@ -76,7 +76,7 @@ pipeline {
                 sh 'sleep 5'
                 sh 'docker ps'
 
-                 sh docker inspect distribution_phpmyadmin_1
+                sh 'docker inspect distribution_phpmyadmin_1'
                 sh 'curl http://${containerIP}:8081'
             }
         }
