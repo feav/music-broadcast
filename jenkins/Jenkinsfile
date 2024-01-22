@@ -33,12 +33,17 @@ pipeline {
                 }
             }
         }
-        
+        stage('Docker Compose buid') {
+            steps {
+                sh 'pwd'
+                def dockerComposeFile = 'distribution/docker-compose.yml'
+                def dockerComposeCommand = "docker-compose -f ${dockerComposeFile} up -d"
+                sh label: 'Run Docker Compose', script: dockerComposeCommand
+            }
+        }
         stage('Build Docker compose Containers - PhpMyAdmin') {
             agent any
             steps {
-                sh 'cd distribution'
-                sh 'pwd'
                 sh 'docker-compose up -d'
                 sh 'sleep 30000'
                 sh 'curl http://localhost:8081'
