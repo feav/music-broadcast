@@ -65,6 +65,8 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'docker-compose -f distribution/docker-compose.yml up -d'
+                // distribution_phpmyadmin_1
+                // distribution_mysql-db_1
             }
         }
         stage('Build Docker compose Containers - PhpMyAdmin') {
@@ -72,7 +74,17 @@ pipeline {
             steps {
                 sh 'sleep 5'
                 sh 'docker ps'
-                sh 'curl http://localhost:8081'
+
+                 def containerName = 'distribution_phpmyadmin_1' // Remplacez par le nom de votre conteneur
+                    
+                // Utilisez docker inspect pour obtenir les détails du conteneur au format JSON
+                def inspectResult = sh(script: "docker inspect ${containerName}", returnStdout: true).trim()
+
+                // Analysez le JSON pour extraire l'adresse IP du conteneur
+                def containerIP = sh(script: "echo ${inspectResult} | jq -r '.[0].NetworkSettings.IPAddress'", returnStdout: true).trim()
+
+                echo "IP Address of container ${containerName}:"
+                sh 'curl http://${containerIP}:8081'
             }
         }
     }
