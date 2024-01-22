@@ -40,7 +40,8 @@ pipeline {
         stage('Build Docker compose Containers - PhpMyAdmin') {
             agent any
             steps {
-                sh 'sleep 30'
+                sh 'sleep 5'
+                sh 'docker ps'
                 sh 'curl http://localhost:8081'
             }
         }
