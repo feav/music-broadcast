@@ -1,14 +1,14 @@
 version: '2'
 services:
   jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:lts
+    # image: 'bitnami/jenkins:2'
+    # image: dirane/jenkins-docker-ansible-clair
+    image: eazytraining/jenkins
     ports:
       - '8080:8080'
       - '443:8443'
       - '50000:50000'
     privileged: true
-    user: root
     restart: always
     volumes:
       - 'jenkins_data:/bitnami'
