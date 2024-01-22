@@ -78,6 +78,14 @@ pipeline {
 
                 sh 'docker inspect distribution_phpmyadmin_1'
                 sh 'curl http://localhost:8081'
+
+                // Afficher le statut du conteneur
+                if (sh(script: "docker ps --filter \"name=distribution_phpmyadmin_1\" --quiet", returnStatus: true) == 0) {
+                     echo "Le conteneur ${containerName} est en cours d'exécution."
+                } else {
+                    error "Le conteneur ${containerName} n'est pas en cours d'exécution."
+                }
+                
             }
         }
     }
