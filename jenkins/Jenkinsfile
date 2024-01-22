@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Compose buid') {
+        stage('Docker Compose buid ') {
             steps {
                 sh 'pwd'
                 def dockerComposeFile = 'distribution/docker-compose.yml'
