@@ -12,5 +12,14 @@ pipeline {
                 sh 'ls distribution'
             }
         }
+        stage('Build Docker compose Containers - PhpMyAdmin') {
+            agent any
+            steps {
+                sh 'cd distribution'
+                sh 'docker-compose up -d'
+                sh 'sleep 30000'
+                sh 'curl http://localhost:8081'
+            }
+        }
     }
 }
