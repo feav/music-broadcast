@@ -45,7 +45,6 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'docker-compose -f distribution/docker-compose.yml up -d'
-                sleep 10
                 // distribution_phpmyadmin_1
                 // distribution_mysql-db_1
             }
@@ -54,7 +53,7 @@ pipeline {
             agent any
             steps {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
-                sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep false"
+                sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
             }
         }
     }
