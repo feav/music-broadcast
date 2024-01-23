@@ -64,7 +64,7 @@ pipeline {
                     if (!mvnInstalled) {
                         echo "Maven is not installed. Installing..."
                          // Télécharger Maven 3.9.6
-                        sh 'curl -O http://apache.mirrors.ionfish.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz'
+                        sh 'curl -O https://dlcdn.apache.org/maven/maven-3/3.9.6/source/apache-maven-3.9.6-src.tar.gz'
     
                         // Extraire l'archive
                         sh 'tar xf apache-maven-3.9.6-bin.tar.gz'
