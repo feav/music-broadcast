@@ -80,7 +80,7 @@ pipeline {
         
         stage('Test Distribution project') {
             steps {
-                sh 'cd distribution && mvn test'
+                sh 'cd distribution && mvn test -Ptest'
             }
         }
     }
