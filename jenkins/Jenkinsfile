@@ -63,13 +63,7 @@ pipeline {
                     def mvnInstalled = sh(script: mvnCommand, returnStatus: true) == 0
                     if (!mvnInstalled) {
                         echo "Maven is not installed. Installing..."
-                         // Télécharger Maven 3.9.6
-                        sh 'curl -O https://dlcdn.apache.org/maven/maven-3/3.9.6/source/apache-maven-3.9.6-src.tar.gz'
-    
-                        // Extraire l'archive
-                        sh 'tar xf apache-maven-3.9.6-bin.tar.gz'
-    
-                        // Ajouter Maven à la variable d'environnement PATH
+                        sh 'curl -O https://dlcdn.apache.org/maven/maven-3/3.9.6/source/apache-maven-3.9.6-src.tar.gz && tar xf apache-maven-3.9.6-src.tar.gz'
                         env.PATH = "${env.WORKSPACE}/apache-maven-3.9.6/bin:${env.PATH}"
                         
                     } else {
