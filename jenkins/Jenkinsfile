@@ -54,9 +54,9 @@ pipeline {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
             }
         }
-        stage('Build') {
+        stage('Test Distribution project') {
             steps {
-                sh 'ls distribution && mvn clean install'
+                sh 'ls distribution && mvn test'
             }
         }
     }
