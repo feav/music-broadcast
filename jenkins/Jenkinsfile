@@ -89,8 +89,6 @@ pipeline {
                 echo "Project Name: ${pom.artifactId}"
                 echo "Project Version: ${pom.version}"
                 echo "Project GroupId: ${pom.groupId}"
-                
-                 def pom = readMavenPom file: 'distribution/pom.xml'
                 sh 'echo ${pom.version}'
             }
         }
