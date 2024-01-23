@@ -10,6 +10,8 @@ services:
       MYSQL_DATABASE: music_distribution
     ports:
       - "3306:3306"
+    networks:
+      - share
     volumes:
       - mysql-data:/var/lib/mysql
 
@@ -23,6 +25,11 @@ services:
       - "8081:80"
     depends_on:
       - mysql-db
+    networks:
+      - share
 
+networks:
+  share:
+    driver: bridge
 volumes:
   mysql-data:

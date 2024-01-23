@@ -22,12 +22,12 @@ class MusicController {
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping("{id}")
+    @GetMapping("{id}")
     public ResponseEntity<MusicDTO> get(@PathVariable("id") Long id) throws NotFoundEntityException {
         Music music =  this.musicService.get(id);
         return new ResponseEntity<>( this.modelMapper.map(music, MusicDTO.class), HttpStatus.OK );
     }
-    @PostMapping()
+    @GetMapping()
     public ResponseEntity<List<MusicDTO>> getAll(){
         List<MusicDTO> productions = musicService
                 .getAll()

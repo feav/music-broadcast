@@ -5,9 +5,10 @@ import com.music.distribution.exception.NotFoundEntityException;
 import com.music.distribution.repository.MusicRepository;
 import com.music.distribution.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class MusicServiceImpl implements MusicService {
     @Autowired
     MusicRepository musicRepository;

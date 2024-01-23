@@ -15,9 +15,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class MusicBatchStep {
     public final String name = "stepImport";
     @Autowired
+    @Qualifier("MusicBatchRepository")
     JobRepository jobRepository;
     @Autowired
-    @Qualifier("MusicBatchRepository")
     PlatformTransactionManager transactionManager;
     @Autowired
     MusicBatchProcessing processor;

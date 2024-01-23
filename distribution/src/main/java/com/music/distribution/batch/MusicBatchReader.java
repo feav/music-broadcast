@@ -12,20 +12,21 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
 @Component
 public class MusicBatchReader implements ItemReader<SyndEntry> {
 
-    private final String rssFeedUrl;
     private final Iterator<SyndEntry> channelIterator;
     private static final Logger log = LoggerFactory.getLogger(MusicBatchReader.class);
-    public MusicBatchReader(String rssFeedUrl) throws IOException, FeedException {
-        this.rssFeedUrl = rssFeedUrl;
+    String rssFeedUrl = "https://www.francetvinfo.fr/culture/musique.rss";
+    public MusicBatchReader() throws IOException, FeedException {
         SyndFeedInput syndFeedInput = new SyndFeedInput();
         syndFeedInput.setXmlHealerOn(true);
-        File outputFile = new File(this.rssFeedUrl);
 
-        SyndFeed syndFeed = syndFeedInput.build(new XmlReader(outputFile));
+        URL url = new URL(this.rssFeedUrl);
+
+        SyndFeed syndFeed = syndFeedInput.build(new XmlReader(url));
 
         this.channelIterator = syndFeed.getEntries().iterator();
     }

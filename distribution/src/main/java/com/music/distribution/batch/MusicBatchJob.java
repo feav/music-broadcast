@@ -2,6 +2,8 @@ package com.music.distribution.batch;
 
 import com.music.distribution.entity.Music;
 import com.rometools.rome.feed.synd.SyndEntry;
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Component
+@Getter
 public class MusicBatchJob {
     public final String name = "stepImport";
     @Autowired
@@ -22,10 +25,10 @@ public class MusicBatchJob {
     @Autowired
     @Qualifier("MusicBatchStepImport")
     Step musicBatchStepImport;
-    @Bean(name = "MusicBatchJobImport")
     protected Job stepImport() {
-        return new JobBuilder("importUserJob", jobRepository)
+        return new JobBuilder("ImportMusicJob", jobRepository)
                 .start(this.musicBatchStepImport)
                 .build();
     }
+
 }
