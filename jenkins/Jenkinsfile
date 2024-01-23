@@ -7,9 +7,6 @@ pipeline {
                 sh ' ls | grep jenkins'
             }  
         }
-        tools {
-            maven "Maven 3.8.4"
-        }
         stage('Check and Install Docker') {
             steps {
                 script {
@@ -58,6 +55,9 @@ pipeline {
             }
         }
         stage('Test Distribution project') {
+            tools {
+                maven "Maven 3.8.4"
+            }
             steps {
                 sh 'cd distribution && mvn test'
             }
