@@ -1,15 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        
         stage('Test Cloning Files') {
             steps {
-                sh 'ls distribution'
+                sh ' ls | grep distribution'
+                sh ' ls | grep jenkins'
             }
         }
         stage('Check and Install Docker') {
@@ -20,21 +15,10 @@ pipeline {
 
                     if (!dockerInstalled) {
                         echo "Docker is not installed. Installing..."
-
-                        // Ajoutez les commandes pour installer Docker ici
                         sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                         sh 'sh get-docker.sh'
-                       // sh 'usermod -aG docker ${USER}'  // Ajoutez l'utilisateur Jenkins au groupe docker
-                            
-                        // Obtenez le nom de l'utilisateur connecté dynamiquement
                         def currentUserName = sh(script: 'whoami', returnStdout: true).trim()
-                        
-                        // Ajoutez l'utilisateur Jenkins au groupe docker
                         sh "sudo usermod -aG docker ${currentUserName}"
-
-                        
-
-                        // Redémarrez Jenkins ou votre agent Jenkins après l'installation de Docker pour que les modifications prennent effet
                     } else {
                         echo "Docker is already installed."
                     }
@@ -46,13 +30,9 @@ pipeline {
             steps {
                 script {
                     def dockerComposeCommand = "docker-compose --version"
-
                     def dockerComposeInstalled = sh(script: dockerComposeCommand, returnStatus: true) == 0
-
                     if (!dockerComposeInstalled) {
                         echo "Docker Compose is not installed. Installing..."
-
-                        // Add commands to install Docker Compose (adjust as needed)
                         sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                         sh 'chmod +x /usr/local/bin/docker-compose'
                     } else {
@@ -65,7 +45,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'docker-compose -f distribution/docker-compose.yml up -d'
-                sleep 20
+                sleep 10
                 // distribution_phpmyadmin_1
                 // distribution_mysql-db_1
             }
@@ -73,13 +53,8 @@ pipeline {
         stage('Build Docker compose Containers - PhpMyAdmin') {
             agent any
             steps {
-                sh 'sleep 5'
-                sh 'docker ps'
-
-                sh 'docker inspect distribution_phpmyadmin_1'
-                sh 'curl http://localhost:8081'
-
-                
+                sh 'docker inspect --format=\'{{json .State.Health.Status}}\' distribution_phpmyadmin_1'
+                sh 'docker inspect --format=\'{{json .State.Health.Status}}\' distribution_mysql-db_1'
             }
         }
     }
