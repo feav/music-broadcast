@@ -57,7 +57,10 @@ pipeline {
                 def ipPhpMyAdmin
                 script {
                     ipPhpMyAdmin = sh(script: 'docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" distribution-phpmyadmin-1', returnStdout: true).trim()
-                }                
+                }   
+                
+                def dockerIpCommand = "docker inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" distribution-phpmyadmin-1"
+                def dockerInstalled = sh(script: dockerIpCommand, returnStdout: true).trim()
                 sh "ls ${ipPhpMyAdmin}"
                 sh "curl ${ipPhpMyAdmin}:8080"
             }
