@@ -86,6 +86,7 @@ pipeline {
                 script {
                     sh 'cd distribution && mvn verify -Pprod'
                     sh 'ls distribution/target/'
+                    sh 'ls ./'
     
                     def pom = readMavenPom file: 'distribution/pom.xml'
                     echo "Project Name: ${pom.artifactId}"
