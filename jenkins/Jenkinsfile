@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Test Distribution project') {
             steps {
-                sh 'ls distribution && mvn test'
+                sh 'cd distribution && mvn test'
             }
         }
     }
