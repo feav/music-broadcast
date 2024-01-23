@@ -65,6 +65,7 @@ pipeline {
                         echo "Maven is not installed. Installing..."
                         sh 'curl -O https://dlcdn.apache.org/maven/maven-3/3.9.6/source/apache-maven-3.9.6-src.tar.gz && tar xf apache-maven-3.9.6-src.tar.gz'
                         env.PATH = "${env.WORKSPACE}/apache-maven-3.9.6/bin:${env.PATH}"
+                        sh 'mvn -v'
                         
                     } else {
                         echo "Maven is already installed."
