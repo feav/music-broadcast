@@ -53,8 +53,9 @@ pipeline {
         stage('Build Docker compose Containers - PhpMyAdmin') {
             agent any
             steps {
-                sh 'docker inspect --format=\'{{json .State.Health.Status}}\' distribution_phpmyadmin_1'
-                sh 'docker inspect --format=\'{{json .State.Health.Status}}\' distribution_mysql-db_1'
+                sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1"
+                sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1"
+                sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_2"
             }
         }
     }
