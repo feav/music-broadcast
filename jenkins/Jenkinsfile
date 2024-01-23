@@ -87,7 +87,7 @@ pipeline {
         stage('Build Artéfact Maven') {
             steps {
                 sh 'cd distribution && mvn verify -Pprod'
-                sh 'ls target'
+                sh 'ls distribution/target/'
             }
         }
     }
