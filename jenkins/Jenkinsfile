@@ -59,6 +59,9 @@ pipeline {
          stage('Check and Install Maven') {
             steps {
                 script {
+                    
+                    def mvnHome = tool 'Maven 3.9.6'
+                    sh 'echo \'${mvnHome}\''
                     def mvnCommand = "mvn -v"
                     def mvnInstalled = sh(script: mvnCommand, returnStatus: true) == 0
                     if (!mvnInstalled) {
