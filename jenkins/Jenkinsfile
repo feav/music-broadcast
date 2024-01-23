@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
-                def ipPhpMyAdmin =sh(script:"docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' distribution-phpmyadmin-1", returnStdout: true).trim()
+                def ipPhpMyAdmin = sh(script: 'docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" distribution-phpmyadmin-1', returnStdout: true).trim()
                 sh "ls ${ipPhpMyAdmin}"
                 sh "curl ${ipPhpMyAdmin}:8080"
             }
