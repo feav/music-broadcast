@@ -1,0 +1,39 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: music_distribution
+    ports:
+      - "3306:3306"
+    networks:
+      - share
+    volumes:
+      - mysql-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql-db
+    networks:
+      - share
+  music-back-end:
+    image: distribution-music:latest
+    ports:
+      - "9091:9091"
+    depends_on:
+      - mysql-db
+    networks:
+      - share
+networks:
+  share:
+    driver: bridge
+volumes:
+  mysql-data:
