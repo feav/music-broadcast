@@ -25,7 +25,6 @@ pipeline {
                 }
             }
         }
-
          stage('Check and Install Docker Compose') {
             steps {
                 script {
@@ -41,7 +40,6 @@ pipeline {
                 }
             }
         }
-        
         stage('Docker Compose buid ') {
             steps {
                 sh 'pwd'
@@ -55,7 +53,6 @@ pipeline {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
             }
         }
-        
          stage('Check and Install Maven') {
             steps {
                 script {
@@ -77,10 +74,26 @@ pipeline {
                 }
             }
         }
-        
+        // distribution\target\distribution-0.0.1-SNAPSHOT.jar
         stage('Test Distribution project') {
             steps {
-                sh 'cd distribution && mvn test'
+                sh 'cd distribution && mvn test -Ptest'
+            }
+        }
+        stage('Build Artéfact Maven') {
+            steps {
+                
+                script {
+                    sh 'cd distribution && mvn verify -Pprod'
+                    sh 'ls distribution/target/'
+                    sh 'ls ./'
+    
+                    def pom = readMavenPom file: 'distribution/pom.xml'
+                    echo "Project Name: ${pom.artifactId}"
+                    echo "Project Version: ${pom.version}"
+                    echo "Project GroupId: ${pom.groupId}"
+                    sh 'echo ${pom.version}'
+                }
             }
         }
     }
