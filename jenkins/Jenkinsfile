@@ -73,7 +73,7 @@ pipeline {
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
-                    sh "ansible -i ansible/hosts.yml all -m ping --ask-pass -e 'ansible_ssh_pass=${ANSIBLE_VPS_CREDENTIALS_PWD}'"
+                    sh 'ansible -i ansible/hosts.yml all -m ping --ask-pass -e \'ansible_ssh_pass=${ANSIBLE_VPS_CREDENTIALS_PWD}\''
                     sh "ansible-playbook -i ansible/hosts ansible/deploy.yml --ask-pass -e 'ansible_ssh_pass=${ANSIBLE_VPS_CREDENTIALS_PWD}'"
                 }
             }
