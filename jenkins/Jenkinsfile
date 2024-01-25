@@ -39,6 +39,7 @@ pipeline {
                         echo "Ansible is not installed. Installing..."
                         sh 'apt update'
                         sh 'apt install ansible -y'
+                        sh 'apt-get install sshpass'
                         sh 'ansible --version'
                     }
 
@@ -65,7 +66,6 @@ pipeline {
                     } else {
                         echo "Ansible is already installed."
                     }
-                    sh 'apt-get install sshpass'
                 }
             }
         }
@@ -73,7 +73,7 @@ pipeline {
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
-                    sh 'ansible -i ansible/hosts.yml all -m ping --ask-pass -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PWD'
+                    sh "ansible -i ansible/hosts.yml all -m ping --ask-pass -e 'ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PWD'"
                    // sh 'ansible -i ansible/hosts.yml all -m ping'
                     withCredentials([usernamePassword(credentialsId: 'client_vps_access', passwordVariable: 'ANSIBLE_VPS_CREDENTIALS_PWD', usernameVariable: 'ANSIBLE_VPS_CREDENTIALS_USR')]) {
                         sh "ansible-playbook -I ansible/hosts.yml ansible/deploy.yml --ask-pass -e 'ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PWD'"
