@@ -65,6 +65,7 @@ pipeline {
                     } else {
                         echo "Ansible is already installed."
                     }
+                    sh 'apt-get install sshpass'
                 }
             }
         }
