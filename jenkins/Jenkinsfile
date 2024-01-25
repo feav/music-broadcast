@@ -72,7 +72,7 @@ pipeline {
         }
         stage('Test Docker Compose Containers') {
             when {
-                expression { env.SKIP_BUILD != true }
+                expression { $SKIP_BUILD != true }
             }
             steps {
                 sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
@@ -83,7 +83,7 @@ pipeline {
         }
         stage('Test Distribution project') {
             when {
-                expression { env.SKIP_BUILD != true }
+                expression { $SKIP_BUILD != true }
             }
             steps {
                 sh 'cd distribution && mvn test -Ptest'
@@ -91,7 +91,7 @@ pipeline {
         }
         stage('Build Artéfact Maven') {
             when {
-                expression { env.SKIP_BUILD != true }
+                expression { $SKIP_BUILD != true }
             }
             steps {
                 sh 'rm -R distribution/target/*.jar'
@@ -103,7 +103,7 @@ pipeline {
         }
         stage('Deploy on Docker Hub') {
             when {
-                expression { env.SKIP_DEPLOY_HUB != true }
+                expression { $SKIP_DEPLOY_HUB != true }
             }
             steps {
                 sh 'docker build --tag feavfeav/distribution-music ./distribution/'
