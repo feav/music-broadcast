@@ -103,7 +103,7 @@ pipeline {
         stage('Deploy on Docker Hub'){
             steps{
                 sh 'docker build --tag feavfeav/distribution-music ./distribution/'
-                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -password-stdin'
+                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push feavfeav/distribution-music:latest'
             }
         }
