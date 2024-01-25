@@ -54,7 +54,7 @@ pipeline {
                 sh "docker ps"
                 sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
-                sh "docker inspect -f '{{json .State.Running}}' distribution-music-back-end-1 | grep true"
+                sh "docker inspect -f '{{json .State.Running}}' distribution_music-back-end_1 | grep true"
             }
         }
         
