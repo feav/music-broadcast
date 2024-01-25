@@ -1,21 +1,21 @@
 ---
-- name: Deploy Distribution Music
-  hosts: client_server
+- name: "Deploy Distribution Music"
+  hosts: all
   become: true
 
   tasks:
-    - name: Copy Docker Compose File
+    - name: "Copy Docker Compose File"
       copy:
         src: distribution/docker-compose-prod.yml
         dest: /music-distribution/distribution/docker-compose-prod.yml
 
-    - name: Copy Docker Compose Launch Script
+    - name: "Copy Docker Compose Launch Script"
       copy:
         src: ansible/launch.sh
         dest: /music-distribution/ansible/launch.sh
       mode: '+x'  # Give execute permissions
 
-    - name: Execute Docker Compose
+    - name: "Execute Docker Compose"
       command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml up -d"
       args:
         chdir: /music-distribution/distribution/
