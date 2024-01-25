@@ -75,6 +75,9 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'client_vps_access')]) {
                         sh 'ansible -i ansible/hosts.yml all -m ping'
+                    }
+                    
+                    withCredentials([usernamePassword(credentialsId: 'client_vps_access')]) {
                         sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml' 
                     }
                 }
