@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker_access')
+        ANSIBLE_VPS_CREDENTIALS = credentials('client_vps_access')
     }
     stages {
         stage('Test Cloning Files') {
@@ -34,6 +35,13 @@ pipeline {
                         sh 'mvn -v'
                     }
 
+                    def installAnsible = {
+                        echo "Ansible is not installed. Installing..."
+                        sh 'apt update'
+                        sh 'apt install ansible -y'
+                        sh 'ansible --version'
+                    }
+
                     if (sh(script: 'docker --version', returnStatus: true) != 0) {
                         installDocker()
                     } else {
@@ -51,6 +59,12 @@ pipeline {
                     } else {
                         echo "Maven is already installed."
                     }
+
+                    if (sh(script: 'ansible --version', returnStatus: true) != 0) {
+                        installAnsible()
+                    } else {
+                        echo "Ansible is already installed."
+                    }
                 }
             }
         }
@@ -59,7 +73,7 @@ pipeline {
                 sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
                 sh 'sleep 5'
                 sh 'docker ps'
-                sh 'docker-compose -f distribution/docker-compose.yml down -d'
+                sh 'docker-compose -f distribution/docker-compose-prod.yml down -d'
             }
         }
         stage('Test Distribution project') {
@@ -83,5 +97,14 @@ pipeline {
                 sh 'docker push feavfeav/distribution-music:latest'
             }
         }
+        stage('Deploy on VPS with Ansible') {
+            steps {
+                script {
+                    sh "ansible -i ansible/hosts all -m ping"
+                    sh 'ansible-playbook -i ansible/hosts ansible/deploy.yml'
+                }
+            }
+        }
+
     }
 }
