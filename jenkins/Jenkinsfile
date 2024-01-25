@@ -73,12 +73,12 @@ pipeline {
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'client_vps_access')]) {
+                   withCredentials([usernamePassword(credentialsId: 'client_vps_access', passwordVariable: 'ANSIBLE_VPS_CREDENTIALS_PSD', usernameVariable: 'ANSIBLE_VPS_CREDENTIALS_USR')]) {
                         sh 'ansible -i ansible/hosts.yml all -m ping'
                     }
                     
-                    withCredentials([usernamePassword(credentialsId: 'client_vps_access')]) {
-                        sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml' 
+                    withCredentials([usernamePassword(credentialsId: 'client_vps_access', passwordVariable: 'ANSIBLE_VPS_CREDENTIALS_PSD', usernameVariable: 'ANSIBLE_VPS_CREDENTIALS_USR')]) {
+                        sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml'
                     }
                 }
 
