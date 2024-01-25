@@ -3,7 +3,12 @@
   hosts: all
   become: true
 
-  tasks:
+  tasks: 
+    - name: Create destination directory
+      file:
+        path: /music-distribution/distribution
+        state: directory
+
     - name: "Copy Docker Compose File"
       copy:
         src: ../distribution/docker-compose-prod.yml
