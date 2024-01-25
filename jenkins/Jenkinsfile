@@ -42,16 +42,22 @@ pipeline {
         }
         stage('Docker Compose buid ') {
             steps {
-                sh 'pwd'
                 sh 'docker-compose -f distribution/docker-compose.yml up -d'
             }
         }
-        stage('Build Docker compose Containers - PhpMyAdmin, Mysql , ') {
+        stage('Build Docker compose Containers - PhpMyAdmin, Mysql , Ditribution') {
             agent any
             steps {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
                 sh "docker inspect -f '{{json .State.Running}}' distribution-music-back-end-1 | grep true"
+            }
+        }
+        
+        stage('Stop Docker compose Containers - PhpMyAdmin, Mysql , ') {
+            agent any
+            steps {
+                sh 'docker-compose -f distribution/docker-compose.yml down -d'
             }
         }
          stage('Check and Install Maven') {
@@ -83,7 +89,9 @@ pipeline {
         }
         stage('Build Artéfact Maven') {
             steps {
+                sh 'rm -R distribution\target\*.jar'
                 sh 'cd distribution && mvn verify -Pprod'
+                sh 'cp distribution\target\*.jar distribution/target/distribution-latest.jar'
                 sh 'ls distribution/target/'
                 sh 'ls ./'
             }
