@@ -45,7 +45,7 @@ pipeline {
         }
         stage('Docker Compose buid ') {
             steps {
-                sh 'docker-compose -f distribution/docker-compose.yml up -d'
+                sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
             }
         }
         stage('Build Docker compose Containers - PhpMyAdmin, Mysql , Ditribution') {
