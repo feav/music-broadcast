@@ -6,7 +6,7 @@
   tasks:
     - name: "Copy Docker Compose File"
       copy:
-        src: distribution/docker-compose-prod.yml
+        src: ../distribution/docker-compose-prod.yml
         dest: /music-distribution/distribution/docker-compose-prod.yml
     - name: "Execute Docker Compose"
       command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml up -d"
