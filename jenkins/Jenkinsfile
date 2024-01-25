@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS : credentials('docker_access')
+    }
     stages {
         stage('Test Cloning Files') {
             steps {
@@ -94,6 +97,13 @@ pipeline {
                 sh 'cp distribution/target/*.jar distribution/target/distribution-latest.jar'
                 sh 'ls distribution/target/'
                 sh 'ls ./'
+            }
+        }
+        stage('Deploy on Docker Hub'){
+            steps{
+                sh 'docker build --tag feavfeav/distribution-music ./distribution/'
+                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -password-stdin'
+                sh 'docker push feavfeav/distribution-music:latest'
             }
         }
     }
