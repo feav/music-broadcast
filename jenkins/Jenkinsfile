@@ -6,50 +6,48 @@ pipeline {
     stages {
         stage('Test Cloning Files') {
             steps {
-                sh ' ls | grep distribution'
-                sh ' ls | grep jenkins'
-            }  
+                sh 'ls | grep distribution'
+                sh 'ls | grep jenkins'
+            }
         }
-        stage('Check and Install Tools(docker,docker-compose, mvn)') {
+        stage('Check and Install Tools (docker, docker-compose, mvn)') {
             steps {
                 script {
-                    def dockerCommand = "docker --version"
-                    def dockerInstalled = sh(script: dockerCommand, returnStatus: true) == 0
-
-                    if (!dockerInstalled) {
+                    def installDocker = {
                         echo "Docker is not installed. Installing..."
                         sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                         sh 'sh get-docker.sh'
                         def currentUserName = sh(script: 'whoami', returnStdout: true).trim()
                         sh "sudo usermod -aG docker ${currentUserName}"
-                    } else {
-                        echo "Docker is already installed."
                     }
-                }
-                script {
-                    def dockerComposeCommand = "docker-compose --version"
-                    def dockerComposeInstalled = sh(script: dockerComposeCommand, returnStatus: true) == 0
-                    if (!dockerComposeInstalled) {
+
+                    def installDockerCompose = {
                         echo "Docker Compose is not installed. Installing..."
                         sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                         sh 'chmod +x /usr/local/bin/docker-compose'
+                    }
+
+                    def installMaven = {
+                        echo "Maven is not installed. Installing..."
+                        sh 'apt update'
+                        sh 'apt install maven -y'
+                        sh 'mvn -v'
+                    }
+
+                    if (sh(script: 'docker --version', returnStatus: true) != 0) {
+                        installDocker()
+                    } else {
+                        echo "Docker is already installed."
+                    }
+
+                    if (sh(script: 'docker-compose --version', returnStatus: true) != 0) {
+                        installDockerCompose()
                     } else {
                         echo "Docker Compose is already installed."
                     }
-                }
-                script {
-                    
-                    def mvnCommand = "mvn -v"
-                    def mvnInstalled = sh(script: mvnCommand, returnStatus: true) == 0
-                    if (!mvnInstalled) {
-                        echo "Maven is not installed. Installing..."
-                        //sh 'curl -O https://dlcdn.apache.org/maven/maven-3/3.9.6/source/apache-maven-3.9.6-src.tar.gz'
-                        //sh 'tar xf apache-maven-3.9.6-src.tar.gz'
-                        sh 'apt update'
-                        sh 'apt install maven -y'
-                        //env.PATH = "${env.WORKSPACE}/apache-maven-3.9.6/bin:${env.PATH}"
-                        sh 'mvn -v'
-                        
+
+                    if (sh(script: 'mvn -v', returnStatus: true) != 0) {
+                        installMaven()
                     } else {
                         echo "Maven is already installed."
                     }
@@ -57,19 +55,13 @@ pipeline {
             }
         }
         stage('Test Docker Compose Containers') {
-            agent any
-            steps { 
+            steps {
                 sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
                 sh 'sleep 5'
-                sh "docker ps"
-                sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
-                sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
-                sh "docker inspect -f '{{json .State.Running}}' distribution_music-back-end_1 | grep true"
-                
+                sh 'docker ps'
                 sh 'docker-compose -f distribution/docker-compose.yml down -d'
             }
         }
-        
         stage('Test Distribution project') {
             steps {
                 sh 'cd distribution && mvn test -Ptest'
@@ -84,8 +76,8 @@ pipeline {
                 sh 'ls ./'
             }
         }
-        stage('Deploy on Docker Hub'){
-            steps{
+        stage('Deploy on Docker Hub') {
+            steps {
                 sh 'docker build --tag feavfeav/distribution-music ./distribution/'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push feavfeav/distribution-music:latest'
