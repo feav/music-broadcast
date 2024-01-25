@@ -13,10 +13,9 @@
       copy:
         src: ansible/launch.sh
         dest: /music-distribution/ansible/launch.sh
-      mode: +x  # Give execute permissions
+      mode: '+x'  # Give execute permissions
 
     - name: Execute Docker Compose
       command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml up -d"
       args:
         chdir: /music-distribution/distribution/
-
