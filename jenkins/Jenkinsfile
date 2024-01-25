@@ -46,11 +46,12 @@ pipeline {
                 sh 'docker-compose -f distribution/docker-compose.yml up -d'
             }
         }
-        stage('Build Docker compose Containers - PhpMyAdmin') {
+        stage('Build Docker compose Containers - PhpMyAdmin, Mysql , ') {
             agent any
             steps {
                 sh "docker inspect -f '{{json .State.Running}}' distribution_phpmyadmin_1 | grep true"
                 sh "docker inspect -f '{{json .State.Running}}' distribution_mysql-db_1 | grep true"
+                sh "docker inspect -f '{{json .State.Running}}' distribution-music-back-end-1 | grep true"
             }
         }
          stage('Check and Install Maven') {
@@ -85,11 +86,6 @@ pipeline {
                 sh 'cd distribution && mvn verify -Pprod'
                 sh 'ls distribution/target/'
                 sh 'ls ./'
-                echo "${POM_DISPLAYNAME}"
-                echo 'POM_VERSION : ${POM_VERSION}'
-                echo 'POM_GROUPID : ${POM_GROUPID}'
-                echo 'POM_ARTIFACTID : ${POM_ARTIFACTID}'
-                echo 'POM_PACKAGING ${POM_PACKAGING}'
             }
         }
     }
