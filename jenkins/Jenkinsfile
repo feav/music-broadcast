@@ -85,7 +85,7 @@ pipeline {
                 sh 'cd distribution && mvn verify -Pprod'
                 sh 'ls distribution/target/'
                 sh 'ls ./'
-                echo ${POM_DISPLAYNAME}
+                echo "${POM_DISPLAYNAME}"
                 echo 'POM_VERSION : ${POM_VERSION}'
                 echo 'POM_GROUPID : ${POM_GROUPID}'
                 echo 'POM_ARTIFACTID : ${POM_ARTIFACTID}'
