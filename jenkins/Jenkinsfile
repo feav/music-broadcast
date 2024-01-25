@@ -25,7 +25,21 @@ pipeline {
                 }
             }
         }
-     
+         stage('Check and Install Docker Compose') {
+            steps {
+                script {
+                    def dockerComposeCommand = "docker-compose --version"
+                    def dockerComposeInstalled = sh(script: dockerComposeCommand, returnStatus: true) == 0
+                    if (!dockerComposeInstalled) {
+                        echo "Docker Compose is not installed. Installing..."
+                        sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                        sh 'chmod +x /usr/local/bin/docker-compose'
+                    } else {
+                        echo "Docker Compose is already installed."
+                    }
+                }
+            }
+        }
         stage('Docker Compose buid ') {
             steps {
                 sh 'pwd'
@@ -74,11 +88,11 @@ pipeline {
                     sh 'ls distribution/target/'
                     sh 'ls ./'
     
-                    def pom = readMavenPom file: 'distribution/pom.xml'
-                    echo "Project Name: ${pom.artifactId}"
-                    echo "Project Version: ${pom.version}"
-                    echo "Project GroupId: ${pom.groupId}"
-                    sh 'echo ${pom.version}'
+                    echo "POM_DISPLAYNAME : ${POM_DISPLAYNAME}"
+                    echo "POM_VERSION : ${POM_VERSION}"
+                    echo "POM_GROUPID : ${POM_GROUPID}"
+                    echo "POM_ARTIFACTID : ${POM_ARTIFACTID}"
+                    echo 'POM_PACKAGING ${POM_PACKAGING}'
                 }
             }
         }
