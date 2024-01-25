@@ -8,13 +8,6 @@
       copy:
         src: distribution/docker-compose-prod.yml
         dest: /music-distribution/distribution/docker-compose-prod.yml
-
-    - name: "Copy Docker Compose Launch Script"
-      copy:
-        src: ansible/launch.sh
-        dest: /music-distribution/ansible/launch.sh
-      mode: '+x'  # Give execute permissions
-
     - name: "Execute Docker Compose"
       command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml up -d"
       args:
