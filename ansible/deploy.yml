@@ -30,6 +30,6 @@
         chdir: /music-distribution/distribution/
 
     - name: Deploy Docker Compose"
-      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml  up --renew-anon-volumes"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml  up -d --renew-anon-volumes"
       args:
         chdir: /music-distribution/distribution/
