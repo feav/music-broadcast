@@ -13,7 +13,23 @@
       copy:
         src: ../distribution/docker-compose-prod.yml
         dest: /music-distribution/distribution/docker-compose-prod.yml
-    - name: "Execute Docker Compose"
-      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml up -d -y"
+        
+    - name: "Pull Distribution music backend"
+      command: "docker pull feavfeav/distribution-music:latest"
+      args:
+        chdir: /music-distribution/distribution/
+
+    - name: "Pull Docker Compose"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml pull"
+      args:
+        chdir: /music-distribution/distribution/
+        
+    - name: "Build Docker Compose"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml build"
+      args:
+        chdir: /music-distribution/distribution/
+
+    - name: Deploy Docker Compose"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml  up --renew-anon-volumes"
       args:
         chdir: /music-distribution/distribution/
