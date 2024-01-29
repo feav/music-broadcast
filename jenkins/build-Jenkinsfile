@@ -92,7 +92,7 @@ pipeline {
         }
         stage('Deploy on Docker Hub') {
             steps {
-                sh 'docker build --tag feavfeav/distribution-music ./distribution/'
+                sh 'docker build --tag feavfeav/distribution-music:latest ./distribution/'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push feavfeav/distribution-music:latest'
             }
