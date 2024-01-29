@@ -75,7 +75,7 @@ pipeline {
                 script {
                     sh 'ansible-playbook --syntax-check -i ansible/hosts.yml ansible/deploy.yml'
                     sh 'ansible -i ansible/hosts.yml all -m ping'
-                    sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml
+                    sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml'
                 }
 
             }
