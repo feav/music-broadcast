@@ -12,7 +12,7 @@
     - name: "Copy Docker Compose File"
       copy:
         src: ../distribution/docker-compose-prod.yml
-        dest: /music-distribution/distribution/docker-compose-prod.yml
+        dest: /music-distribution/distribution/docker-compose.yml
         
     - name: "Pull Distribution music backend"
       command: "docker pull feavfeav/distribution-music:latest"
@@ -20,16 +20,16 @@
         chdir: /music-distribution/distribution/
 
     - name: "Pull Docker Compose"
-      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml pull"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose.yml pull"
       args:
         chdir: /music-distribution/distribution/
         
     - name: "Build Docker Compose"
-      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml build"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose.yml build"
       args:
         chdir: /music-distribution/distribution/
 
     - name: Deploy Docker Compose"
-      command: "docker-compose -f /music-distribution/distribution/docker-compose-prod.yml  up -d --renew-anon-volumes"
+      command: "docker-compose -f /music-distribution/distribution/docker-compose.yml  up -d --renew-anon-volumes"
       args:
         chdir: /music-distribution/distribution/
