@@ -25,7 +25,7 @@ services:
     networks:
       - share
   music-back-end:
-    image: distribution-music:latest
+    image: feavfeav/distribution-music:latest
     ports:
       - "9091:9091"
     depends_on:
