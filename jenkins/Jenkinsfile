@@ -69,7 +69,35 @@ pipeline {
                 }
             }
         }
-     
+        stage('Test Docker Compose Containers') {
+            steps {
+                sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
+                sh 'sleep 5'
+                sh 'docker ps'
+                sh 'docker-compose -f distribution/docker-compose-prod.yml down -d'
+            }
+        }
+        stage('Test Distribution project') {
+            steps {
+                sh 'cd distribution && mvn test -Ptest'
+            }
+        }
+        stage('Build Artéfact Maven') {
+            steps {
+                sh 'rm -R distribution/target/*.jar'
+                sh 'cd distribution && mvn verify -Pprod'
+                sh 'cp distribution/target/*.jar distribution/target/distribution-latest.jar'
+                sh 'ls distribution/target/'
+                sh 'ls ./'
+            }
+        }
+        stage('Deploy on Docker Hub') {
+            steps {
+                sh 'docker build --tag feavfeav/distribution-music:latest ./distribution/'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push feavfeav/distribution-music:latest'
+            }
+        }
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
