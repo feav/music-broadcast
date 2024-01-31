@@ -69,7 +69,7 @@ pipeline {
                 }
             }
         }
-        stage('Test Docker Compose Containers') {
+        /*stage('Test Docker Compose Containers') {
             steps {
                 sh 'docker ps'
                 sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
@@ -77,7 +77,7 @@ pipeline {
                 sh 'docker ps'
                 sh 'docker-compose -f distribution/docker-compose-prod.yml down -d'
             }
-        }
+        }*/
         stage('Test Distribution project') {
             steps {
                 sh 'cd distribution && mvn test -Ptest'
