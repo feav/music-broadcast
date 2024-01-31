@@ -1,0 +1,27 @@
+<div class="block">
+    <div class="block-title">
+        <h1>Musics Récentes ({{musics.length}})</h1>
+    </div>
+    <div class="block-content">
+        <div class="card-list">
+            @for (music of musics; track $index) {
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-thumbnail">
+                            <img [src]="music.image | defaultImage"/>
+                        </div>
+                        <div class="card-title">
+                            {{music.title  | truncate: 20 }}
+                        </div>
+                        <button class="play-button">
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                       {{ music.description  | truncate: 100 }}
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

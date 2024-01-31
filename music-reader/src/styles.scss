@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --color-body: #000000;
+    --color-head-block: #090909;
+    --color-content-block: #121212;
+    --color-text: #ffffff;
+    --color-text-placeholder: #d4d4d4;
+    --color-primary-button: #000000;
+    --color-secondary-button: #ffffff;
+    --bg-primary-button: #ffffff;
+    --bg-secondary-button: #000000;
+    --bg-card: #181818;
+    --bg-card-hover: #282828;
+}
+
+body{
+    background-color: var(--color-body);
+    color: var(--color-text); 
+    font-family: 'Avenir Next', 'Open Sans';
+
+}

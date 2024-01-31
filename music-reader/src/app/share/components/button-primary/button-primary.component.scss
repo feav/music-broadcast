@@ -1,0 +1,16 @@
+button.primary-btn{
+    background-color: var(--bg-primary-button);
+    border: none;
+    color: var(--color-primary-button);
+    font-size: 15px;
+    padding: 10px;
+    width: 150px;
+    border-radius: 20px;
+    height: 45px;
+    font-weight: 600;
+}
+
+button.primary-btn:hover{
+    transform: scale(1.1);
+    transition:  all .7s ease;
+}

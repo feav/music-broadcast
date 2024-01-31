@@ -1,0 +1,35 @@
+main{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    .content{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        .main-side-head{
+            display: flex;
+            background-color: var(--color-head-block);
+            app-header{
+                width: 100%;
+            }
+        }
+        .main-side-content{
+            padding: 20px;
+        }
+
+    }
+    .left-side , .main-side{
+        background-color: var(--color-content-block);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .left-side{
+        width: 20%;
+        padding: 10px;
+    }
+    .main-side{
+        width: 77%;
+    }
+}

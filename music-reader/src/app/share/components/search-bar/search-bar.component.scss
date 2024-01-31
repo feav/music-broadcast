@@ -1,0 +1,23 @@
+.content-search-bar{
+    position: relative;
+    input.search-input {
+        display: flex;
+        background-color: var(--color-content-block);
+        height: 45px;
+        width: 325px;
+        border: none;
+        margin-left: 5px;
+        padding-left: 50px;
+        padding-right: 5px;
+        border-radius: 20px;
+        font-size: 15px;
+        color: var(--color-text-placeholder);
+    }
+    i.fas{
+        position: absolute;
+        top: calc(50% - 7px);
+        left: 20px;
+        font-size: 15px;
+        color: var(--color-text-placeholder);
+    }
+}
