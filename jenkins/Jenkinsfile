@@ -71,6 +71,7 @@ pipeline {
         }
         stage('Test Docker Compose Containers') {
             steps {
+                sh 'docker ps'
                 sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
                 sh 'sleep 5'
                 sh 'docker ps'
