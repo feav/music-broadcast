@@ -49,7 +49,7 @@ export class ListMusicComponent implements OnInit  {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       if(this.musics.length == this.page*this.pageSize){
         this.page++;
-        //this.loadItems();
+        this.loadItems();
       }
     }
   }

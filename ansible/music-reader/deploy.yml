@@ -1,0 +1,35 @@
+---
+- name: "Deploy Distribution Music"
+  hosts: all
+  become: true
+
+  tasks: 
+    - name: Create destination directory
+      file:
+        path: /music-distribution/music-reader
+        state: directory
+
+    - name: "Copy Docker Compose File"
+      copy:
+        src: ../../music-reader/docker-compose.yml
+        dest: /music-distribution/music-reader/docker-compose.yml
+        
+    - name: "Pull Distribution music frontend"
+      command: "docker pull feavfeav/music-reader-server:latest"
+      args:
+        chdir: /music-distribution/music-reader/
+
+    - name: "Pull Docker Compose"
+      command: "docker-compose -f /music-distribution/music-reader/docker-compose.yml pull"
+      args:
+        chdir: /music-distribution/music-reader/
+        
+    - name: "Build Docker Compose"
+      command: "docker-compose -f /music-distribution/music-reader/docker-compose.yml build"
+      args:
+        chdir: /music-distribution/music-reader/
+
+    - name: Deploy Docker Compose"
+      command: "docker-compose -f /music-distribution/music-reader/docker-compose.yml  up -d --renew-anon-volumes"
+      args:
+        chdir: /music-distribution/music-reader/

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MusicDistributionService {
-  url = "http://127.0.0.1:9091/api/v1/productions/?";
+  url = "http://194.164.17.197:9091/api/v1/productions/?";
   
   getMusicPagginated(page: number, pageSize: number) : Observable<Music[]> {
     const apiUrl = `${this.url}page?page=${page}&pageSize=${pageSize}`;
