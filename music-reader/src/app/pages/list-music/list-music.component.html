@@ -1,6 +1,6 @@
 <div class="block">
     <div class="block-title">
-        <h1>Musics Récentes ({{musics.length}})</h1>
+        <h1>Musics Récentes</h1>
     </div>
     <div class="block-content">
         <div class="card-list">
@@ -18,7 +18,7 @@
                         </button>
                     </div>
                     <div class="card-content">
-                       {{ music.description  | truncate: 100 }}
+                       {{ music.description  | truncate: 60 }}
                     </div>
                 </div>
             }

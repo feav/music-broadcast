@@ -5,6 +5,8 @@ import com.music.distribution.exception.NotFoundEntityException;
 import com.music.distribution.repository.MusicRepository;
 import com.music.distribution.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,10 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public void delete(Music music) throws NotFoundEntityException {
          this.musicRepository.delete(music);
+    }
+
+    @Override
+    public Page<Music> getPaginatedMusics(int page, int size) {
+        return musicRepository.findAll(PageRequest.of(page, size));
     }
 }

@@ -4,6 +4,7 @@ import com.music.distribution.entity.Music;
 import com.music.distribution.exception.CreatedException;
 import com.music.distribution.exception.NotFoundEntityException;
 import com.music.distribution.exception.UpdatedException;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface MusicService {
     Music get(Long id) throws NotFoundEntityException;
     List<Music> getAll();
     void delete(Music music) throws NotFoundEntityException;
+    public Page<Music> getPaginatedMusics(int page, int size);
 }

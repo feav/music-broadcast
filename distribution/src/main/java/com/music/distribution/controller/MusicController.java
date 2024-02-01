@@ -6,6 +6,7 @@ import com.music.distribution.exception.NotFoundEntityException;
 import com.music.distribution.service.MusicService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,12 @@ class MusicController {
                 .map(prod -> this.modelMapper.map(prod, MusicDTO.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(productions, HttpStatus.OK );
+    }
+    @GetMapping("page")
+    public Page<Music> getPaginatedMusics(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return musicService.getPaginatedMusics(--page, size);
     }
 }

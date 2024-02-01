@@ -20,6 +20,7 @@ public class Music {
     @Lob
     @Column(length = 1000)
     public String description;
+    @Column(length = 1000)
     public String link;
     public String image;
     public Date createdAt;

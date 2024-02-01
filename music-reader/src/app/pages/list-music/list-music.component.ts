@@ -27,12 +27,9 @@ export class ListMusicComponent implements OnInit  {
   }
   loadItems() {
     if(!this.noMoreMusics){
-      console.log(this.musics)
       this.musicService.getMusicPagginated(this.page, this.pageSize).subscribe((data: any) => {
-        if( data.content != undefined){
-          this.musics = this.musics.concat(data.content);
-
-          console.log(this.musics)
+        if( data != undefined){
+          this.musics = this.musics.concat(data);
           if( data.totalPages < this.page)
             this.noMoreMusics = true;
         }
