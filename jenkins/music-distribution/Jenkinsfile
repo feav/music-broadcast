@@ -85,7 +85,7 @@ pipeline {
         }
         stage('Build Artéfact Maven') {
             steps {
-                sh 'rm -R distribution/target/*.jar'
+                sh 'rm -R -f distribution/target/*.jar'
                 sh 'cd distribution && mvn verify -Pprod'
                 sh 'cp distribution/target/*.jar distribution/target/distribution-latest.jar'
                 sh 'ls distribution/target/'
