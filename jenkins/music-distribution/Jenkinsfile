@@ -102,9 +102,9 @@ pipeline {
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
-                    sh 'ansible-playbook --syntax-check -i ansible/hosts.yml ansible/deploy.yml'
-                    sh 'ansible -i ansible/hosts.yml all -m ping   -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
-                    sh 'ansible-playbook -i ansible/hosts.yml ansible/deploy.yml  -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
+                    sh 'ansible-playbook --syntax-check -i ansible/music-distribution/hosts.yml ansible/music-distribution/deploy.yml'
+                    sh 'ansible -i ansible/music-distribution/hosts.yml all -m ping   -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
+                    sh 'ansible-playbook -i ansible/music-distribution/hosts.yml ansible/music-distribution/deploy.yml  -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
                 }
 
             }

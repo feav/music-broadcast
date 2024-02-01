@@ -7,8 +7,8 @@ pipeline {
     stages {
         stage('Test Cloning Files') {
             steps {
-                sh 'ls | grep distribution'
-                sh 'ls | grep jenkins'
+                sh 'ls | grep music-reader'
+                sh 'ls | grep jenkins/music-distribution/Jenkinsfile'
             }
         }
         stage('Check and Install Tools (docker, docker-compose, mvn)') {
@@ -28,17 +28,12 @@ pipeline {
                         sh 'chmod +x /usr/local/bin/docker-compose'
                     }
 
-                    def installMaven = {
-                        echo "Maven is not installed. Installing..."
-                        sh 'apt update'
-                        sh 'apt install maven -y'
-                        sh 'mvn -v'
-                    }
 
                     def installAnsible = {
                         echo "Ansible is not installed. Installing..."
                         sh 'apt update'
                         sh 'apt install ansible -y'
+                        sh 'apt-get install sshpass'
                         sh 'ansible --version'
                     }
 
@@ -54,11 +49,6 @@ pipeline {
                         echo "Docker Compose is already installed."
                     }
 
-                    if (sh(script: 'mvn -v', returnStatus: true) != 0) {
-                        installMaven()
-                    } else {
-                        echo "Maven is already installed."
-                    }
 
                     if (sh(script: 'ansible --version', returnStatus: true) != 0) {
                         installAnsible()
@@ -68,41 +58,35 @@ pipeline {
                 }
             }
         }
-        stage('Test Docker Compose Containers') {
+        /*stage('Test Distribution project') {
             steps {
-                sh 'docker-compose -f distribution/docker-compose-prod.yml up -d'
-                sh 'sleep 5'
-                sh 'docker ps'
-                sh 'docker-compose -f distribution/docker-compose-prod.yml down -d'
+                sh 'cd music-reader && mvn test -Ptest'
             }
         }
-        stage('Test Distribution project') {
+        stage('Build Node Project') {
             steps {
-                sh 'cd distribution && mvn test -Ptest'
-            }
-        }
-        stage('Build Artéfact Maven') {
-            steps {
-                sh 'rm -R distribution/target/*.jar'
-                sh 'cd distribution && mvn verify -Pprod'
+                sh 'rm -R music-reader/target/dist/*'
+                sh 'cd music-reader && mvn verify -Pprod'
                 sh 'cp distribution/target/*.jar distribution/target/distribution-latest.jar'
                 sh 'ls distribution/target/'
                 sh 'ls ./'
             }
-        }
+        }*/
         stage('Deploy on Docker Hub') {
             steps {
-                sh 'docker build --tag feavfeav/distribution-music:latest ./distribution/'
+                sh 'docker build --tag feavfeav/music-reader-server:latest ./music-reader/'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push feavfeav/distribution-music:latest'
+                sh 'docker push feavfeav/music-reader-server:latest'
             }
         }
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
-                    sh "ansible -i ansible/hosts all -m ping"
-                    sh 'ansible-playbook -i ansible/hosts ansible/deploy.yml'
+                    sh 'ansible-playbook --syntax-check -i ansible/hosts.yml ansible/music-reader/deploy.yml'
+                    sh 'ansible -i ansible/music-reader/hosts.yml all -m ping   -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
+                    sh 'ansible-playbook -i ansible/music-reader/hosts.yml ansible/music-reader/deploy.yml  -e ansible_ssh_pass=$ANSIBLE_VPS_CREDENTIALS_PSW'
                 }
+
             }
         }
 
