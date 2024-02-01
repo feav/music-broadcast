@@ -8,7 +8,7 @@ pipeline {
         stage('Test Cloning Files') {
             steps {
                 sh 'ls | grep music-reader'
-                sh 'ls | grep jenkins/music-distribution/Jenkinsfile'
+                sh 'ls jenkins/music-distribution | grep Jenkinsfile'
             }
         }
         stage('Check and Install Tools (docker, docker-compose, mvn)') {
