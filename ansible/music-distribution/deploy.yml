@@ -11,7 +11,7 @@
 
     - name: "Copy Docker Compose File"
       copy:
-        src: ../distribution/docker-compose-prod.yml
+        src: ../../distribution/docker-compose-prod.yml
         dest: /music-distribution/distribution/docker-compose.yml
         
     - name: "Pull Distribution music backend"
