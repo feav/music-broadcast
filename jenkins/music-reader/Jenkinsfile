@@ -71,14 +71,14 @@ pipeline {
                 sh 'ls distribution/target/'
                 sh 'ls ./'
             }
-        }*/
+        }
         stage('Deploy on Docker Hub') {
             steps {
                 sh 'docker build --tag feavfeav/music-reader-server:latest ./music-reader/'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push feavfeav/music-reader-server:latest'
             }
-        }
+        }*/
         stage('Deploy on VPS with Ansible') {
             steps {
                 script {
