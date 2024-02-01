@@ -65,7 +65,7 @@ pipeline {
         }
         stage('Build Node Project') {
             steps {
-                sh 'rm -R music-reader/target/dist/*'
+                sh 'rm -R -f music-reader/target/dist/*'
                 sh 'cd music-reader && mvn verify -Pprod'
                 sh 'cp distribution/target/*.jar distribution/target/distribution-latest.jar'
                 sh 'ls distribution/target/'
