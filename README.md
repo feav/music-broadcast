@@ -27,6 +27,7 @@ Ce répertoire contient les fichiers Jenkins pour l'intégration continue.
 
 ## distribution
 Ce répertoire contient le code source de l'application backend.
+
 ![Illustration](https://imgur.com/iIFY647.png)
 
 ### Structure du répertoire :
@@ -38,8 +39,14 @@ Ce répertoire contient le code source de l'application backend.
   - **test/**
     - **java/** : Tests unitaires Java.
 
+Les containers lancés dans ce contexte pour faire tourner le backend.
+
+![Illustration](https://imgur.com/C1EIhVF.png)
+
 ## music-reader
 Ce répertoire contient le code source de la deuxième version du lecteur de musique.
+http://194.164.17.197/home 
+
 ![Illustration](https://imgur.com/kPCg1mr.png)
 
 ### Structure du répertoire :
