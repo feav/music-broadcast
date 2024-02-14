@@ -38,14 +38,6 @@ http://194.164.17.197/home
 - **src/** : Code source de l'application frontend.
   - **app/** : Code Angular de l'application.
   - **assets/** : Fichiers statiques de l'application.
-## ansible
-Ce répertoire contient les scripts Ansible pour le déploiement de l'application.
-
-![Illustration](https://imgur.com/ixSe9m2) 
-
-### Contenu :
-- **music-distribution.yml** : Script Ansible pour le déploiement du backend et du frontend de l'application.
-- **music-reader.yml** : Script Ansible pour le déploiement du lecteur de musique.
 
 ## jenkins
 Ce répertoire contient les fichiers Jenkins pour l'intégration continue.
@@ -58,5 +50,14 @@ Ce répertoire contient les fichiers Jenkins pour l'intégration continue.
 #### **music-reader/** : Fichiers Jenkins pour le déploiement du lecteur de musique.
 
 ![Illustration](https://imgur.com/u5lkUuG.png)
+
+## ansible
+Ce répertoire contient les scripts Ansible pour le déploiement de l'application.
+
+![Illustration](https://imgur.com/ixSe9m2.png) 
+
+### Contenu :
+- **music-distribution.yml** : Script Ansible pour le déploiement du backend et du frontend de l'application.
+- **music-reader.yml** : Script Ansible pour le déploiement du lecteur de musique.
 
 ---
