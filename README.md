@@ -51,6 +51,9 @@ Ce répertoire contient les fichiers Jenkins pour l'intégration continue.
 
 ![Illustration](https://imgur.com/u5lkUuG.png)
 
+Déploiement des images sur Docker Hub
+![Illustration](https://imgur.com/HR55V7x.png)
+
 ## ansible
 Ce répertoire contient les scripts Ansible pour le déploiement de l'application.
 
