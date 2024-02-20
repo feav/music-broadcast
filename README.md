@@ -59,7 +59,7 @@ Ce répertoire contient les scripts Ansible pour le déploiement de l'applicatio
 
 ![Illustration](https://imgur.com/ixSe9m2.png) 
 
-### Contenu :
+### Contenu : 
 - **music-distribution.yml** : Script Ansible pour le déploiement du backend et du frontend de l'application.
 - **music-reader.yml** : Script Ansible pour le déploiement du lecteur de musique.
 
