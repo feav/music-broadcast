@@ -33,7 +33,7 @@ http://194.164.17.197/home
  
 ![Illustration](https://imgur.com/kPCg1mr.png)
 
-### Structure du répertoire :
+### Structure du répertoire du projet angular:
 - **.angular/** : Cache Angular.
 - **src/** : Code source de l'application frontend.
   - **app/** : Code Angular de l'application.
