@@ -6,7 +6,7 @@
 ![Illustration](https://i.imgur.com/BPMPhGB.png)
 
 Ce projet contient plusieurs modules pour le développement, le déploiement et la distribution d'une application de lecture de musique.
-
+ 
 
 ## distribution
 Ce répertoire contient le code source de l'application backend.
